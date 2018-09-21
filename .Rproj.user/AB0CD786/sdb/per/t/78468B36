@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "library(readr)\nlibrary(caret)\nlibrary(ggplot2)\nlibrary(readxl)\n# Load and clean the data\ndata_blood <- read_csv(\"~/projects/ml_challenges/data_blood.csv\")\n\nnames(data_blood) <- c(\"ID\", \"months_since_last\", \"number_donations\",\n                 \"total_volume\", \"months_since_first\", \"made_donation\")\n\ndata_blood[2:5] <- sapply(data_blood[2:5], as.numeric)\ndata_blood$made_donation <- as.factor(data_blood$made_donation)\ndata_blood$ID <- NULL\n\n# Preprocessing the data\n\n# pair-wise plots of all 4 attributes, dots colored by class\nfeaturePlot(x=data_blood[,1:4], \n            y=data_blood[,5], \n            plot=\"pairs\" \n            #auto.key=list(columns=3)\n            )\n\n\n# split into training and test data\nIndex <- createDataPartition(data_blood$made_donation, p=0.80, list=FALSE)\ndata_train <- data_blood[Index,]\ndata_test <- data_blood[-Index,]\n\n\n# train the model\n\nfit.glm <- train(made_donation ~ months_since_last + number_donations + months_since_first,\n                 data=data_train, method=\"glm\", metric=\"Accuracy\")\n\nsummary(fit.glm)\npredict(fit.glm)\n\n# check accuracy on test data\npredict(fit.glm, newdata = data_test) == data_test$made_donation\n\n\nsum(predict(fit.glm, newdata = data_test) == data_test$made_donation)/nrow(data_test)\n",
+    "created" : 1532695924255.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1005864234",
+    "id" : "78468B36",
+    "lastKnownWriteTime" : 1532701436,
+    "last_content_update" : 1532701436,
+    "path" : "~/projects/ml_challenges/data_challenge_2.R",
+    "project_path" : "data_challenge_2.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "### Data Challenge 1: Predicting whether preace agreements will fail or not\n\nlibrary(readxl)\ndata_peace <- read_excel(\"~/projects/ml_challenges/data_peace.xls\")\n\nnames(data_peace)\n\n# subset data\ndata <- data_peace[, c(\"ended\",\"cease\", \"Intarmy\", \"DDR\", \"Withd\",\n                       \"Mil_prov\", \"pp\", \"Intgov\", \"Intciv\",\"Elections\",\n                       \"Interrim\", \"Natalks\", \"Shagov\", \"Pol_prov\", \"Aut\",                       \n                       \"Fed\", \"Ind\" ,\"Ref\", \"Shaloc\",\n                       \"Regdev\", \"Cul\", \"Demarcation\",\"Locgov\",\n                       \"Terr_prov\",  \"Amn\", \"pris\", \"Recon\",\n                       \"Return\", \"Justice_prov\")]\n\nlibrary(caret)\nlibrary(ggplot2)\n\n\nIndex <- createDataPartition(data$ended, p=0.90, list=FALSE)\ndata_train <- data[Index,]\ndata_test <- data[-Index,]\n\n# explore the data\nnrow(data_train)\nncol(data_train)\nsummary(data_train)\n\nggplot(data, aes(x=DDR, \n                       y=Aut))+\n  geom_histogram(aes(col =as.factor(ended)))\n\n# train the model\n\nfit.glm <- train(as.factor(ended) ~ .,\n                 data=data_train, method=\"treebag\", metric=\"Accuracy\")\n\nsummary(fit.glm)\nsum(predict(fit.glm) == data_train$ended) / nrow(data_train)\n\n# check accuracy on test data\nsum(predict(fit.glm, newdata = data_test) == data_test$ended)/nrow(data_test)\n\n",
+    "created" : 1531923988259.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "4230749293",
+    "id" : "25650C3D",
+    "lastKnownWriteTime" : 1532695944,
+    "last_content_update" : 1532695944915,
+    "path" : "~/projects/ml_challenges/data_challenge_1.R",
+    "project_path" : "data_challenge_1.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

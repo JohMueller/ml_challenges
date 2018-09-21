@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1532695924255.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "959386817",
+    "id" : "78468B36",
+    "lastKnownWriteTime" : 1536852990,
+    "last_content_update" : 1536852990697,
+    "path" : "~/projects/ml_challenges/data_challenge_2.R",
+    "project_path" : "data_challenge_2.R",
+    "properties" : {
+        "cursorPosition" : "13,21",
+        "scrollLine" : "0",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1532697028309.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "3B57235C",
+    "lastKnownWriteTime" : 13229757704831081,
+    "last_content_update" : 1532697028309,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "C42FAC4A",
+        "caption" : "data_blood",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=data_blood&cache_key=C42FAC4A",
+        "displayedObservations" : 576,
+        "environment" : "",
+        "object" : "data_blood",
+        "preview" : 0,
+        "totalObservations" : 576,
+        "variables" : 5
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

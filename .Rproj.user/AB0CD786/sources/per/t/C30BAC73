@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1536837030037.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1652870770",
+    "id" : "C30BAC73",
+    "lastKnownWriteTime" : 1536863951,
+    "last_content_update" : 1536863951,
+    "path" : "~/projects/ml_challenges/2018-09-13_intro.Rmd",
+    "project_path" : "2018-09-13_intro.Rmd",
+    "properties" : {
+        "cursorPosition" : "8,34",
+        "scrollLine" : "42",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}
