@@ -1,0 +1,113 @@
+---
+title: "Introduction to applied Machine Learning - Models, Hyperparameters, Preprocessing"
+author: "Johannes J. Mueller"
+date: "24 September 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+In the first part of our introduction series you learned what Machine Learning is and how you can set up a basic ML workflow in R. In this second part we dive deeper into different approaches, data preprocessing and model tuning. This intro will be accompanied by a Python code template that you can use to take part in our challenges. 
+
+## Different models for different purposes
+
+There is a vast variety of different approaches you can use for Machine Learning. In our challenges we only deal with classification, I will focus only on **supervised learning** approaches for categorical data.
+
+  * **Logistic Regression**: One very basic model that is familiar to social scientists is the logistic regression. With a generalised linear model we can use a linear combination of predictor variables to model the odds of the outcome being 1 or 0. The logistic regression approach can also be extended to multinomial data. One big advantage of log. Regression is that we interpret the coefficients. A disadvantage is that it is not an efficient approach when we have a lot of features. Read more on Logistic Regression: https://machinelearningmastery.com/logistic-regression-for-machine-learning/
+  
+  * **Decision Tree**: Decision trees (DTs) are a rather simple but very powerful way to do classification. DTs split the data into subsets and compare the distribution of the outcome in each subset. Incrementally the best tree is built which explains a much variance as possible in the outcome. Building DTs is not as easy tough because they are prone to overfitting. Read more on decision trees: https://medium.com/@chiragsehra42/decision-trees-explained-easily-28f23241248
+  A very powerful extension to DTs is the **Random Forest Method** where multiple random trees are built. It is a robust approach to deal with overfitting. In fact it is so robust that it produces great results for a wide variety of problems and is always among the top appraoches in ML competitions. Read more on random forests: https://towardsdatascience.com/the-random-forest-algorithm-d457d499ffcd
+  
+  
+  * **Nearest Neighbour**: Another approach that might be familiar to social scientists. the k-nearest-neighbour (knn) appraoch calculates a distance metric based on a set of features between all the observations. Based on the distance metric new observations can be classified based on similarity with other observations. knn is a robust method but might be rather slow for big datasets with many features. Read more on knn: https://towardsdatascience.com/k-nearest-neighbors-its-purpose-and-how-to-use-it-36fa927acc64
+  
+  * **Support Vector Machine**: Support Vector Machines (SVMs) are another simple yet powerful approach to classification. The easiest way to understand is what a SVM does is to image a two-dimensional feature space. Based on the labels SVMs try to seperate the observations by label using a simple line. This approach can then be extended to a multi-dimensional feature space. A simple explanation can be found here: https://www.analyticsvidhya.com/blog/2014/10/support-vector-machine-simplified/
+  
+  * **(Deep) Neural Network**: Last but not least, we have to talk about neural networks. Neural networks deserve a blog post on their own. In a nutshell they can be seen as an extension to logistic regression. However, they are highly flexible and non-linear. This makes NNs a very powerful tool when you have a vast feature space (as it is the case for image classification for example) and many observations. A great explanation of NN can be found here: https://thebeautyofml.wordpress.com/2016/03/25/in-nutshell-neural-networks/ 
+  For a more in-depth explanation of the math behind NN I recommend this youtube-series: https://www.youtube.com/watch?v=aircAruvnKk
+  
+You know have an idea of different approaches. Every approach has its advantages and disadvantages. It is therefore a good idea to experiment. 
+
+## Hyper-Parameter Tuning
+
+Speaking of experimenting: Each approach introduced above cannot be used as is. Each approach has to be customised to fit the data. Take Descision Trees for example: You have to specify how your tree should look like. How deep do you want to build the tree? Which rules for splitting the subsets should be applied? Those design choices are called **hyperparameters**. One way to "tune" the hyperparameters is just to experiment with different values. However, there are more structured approaches such as **grid search**. When using grid search you pre-specify a range of possible hyperparameters and then compare  the respective models A great introduction to hyperparameter tuning is this blogpost: https://www.jeremyjordan.me/hyperparameter-tuning/
+
+## Data Preprocessing and Transformation
+
+Another way to improve your classification is by preprocessing the data before putting it into the model. This step is called data preprocessing and data transformation. Obviously, the data has to be cleaned before using it: Dealing with inconsistencies, missing values, and sampling issues.
+
+The step of data transformation might be familiar to the social scientist. When you have a skewed distribution on a variable you might want to take the logarithm before using the variable. There are different ways to transform your data are: 
+If you're features have vastly different scales you might want to standardise your data or otherwise transform it. Sometimes you want to split individual features into different parts (e.g. a timestamp). And sometimes you might want to aggregate information. In the second challenge for example you want to combine the two indicators "month since first donation" and "month since last donation" to create a new feature called "total active months". Another way to aggregate your data and reduce the fearure speace is to synthesize highly correlated features. This is often done using principal component analysis.
+
+Read more on data preprocessing here: https://machinelearningmastery.com/how-to-prepare-data-for-machine-learning/
+Read more on principal component analysis here: https://hackernoon.com/supervised-machine-learning-dimensional-reduction-and-principal-component-analysis-614dec1f6b4c
+
+## The ML workflow in Python
+
+In the first part of the introduction I introduced an example script for the analysis in R. Here is a start-to-end script in Python which you can use to submit a model for the second challenge. We use the very powerful **sklearn** library.
+
+The second challenge is a good opportunity to apply some of the concepts introduced above: Try different models, and think about how can you transform the features (*Tip: Compare a decision tree model to logistic regression ;)*). 
+
+```{python, eval = F}
+# Import Dependencies
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import roc_auc_score
+from sklearn.model_selection import cross_val_score
+from sklearn.preprocessing import scale
+from sklearn.metrics import classification_report
+
+### Load Data
+df = pd.read_csv("data.csv")
+df = df.drop("Unnamed: 0", 1)
+
+#print(np.sum(pd.isnull(df))) # Check for NAs
+
+## Create Feature Matrix and Outcome Vector
+X = np.array(df[["Months since Last Donation", "Number of Donations",
+        "Total Volume Donated (c.c.)", "Months since First Donation"]])
+X = scale(X)
+y = np.array(df[["Made Donation in March 2007"]])
+
+# Initialize LogisticRegression
+logreg = LogisticRegression()
+
+# Split Data
+X_train, X_test, y_train, y_test = train_test_split(X, y,test_size=0.3, random_state=42)
+
+# Fit model
+logreg.fit(X_train, y_train)
+
+# Predict Values
+y_pred = logreg.predict(X_test)
+y_pred_prob = logreg.predict_proba(X_test)[:,1]
+
+# Check Precision
+print(roc_auc_score(y_test, y_pred_prob))
+print(classification_report(y_test, y_pred))
+cv_scores = cross_val_score(logreg, X, y, cv=3, scoring='roc_auc')
+print(cv_scores)
+
+##########
+##########
+
+# Load data for submission
+
+X_sub = pd.read_csv("blood_test.csv")
+col1 = np.array(X_sub["Unnamed: 0"])
+X_sub = X_sub.drop("Unnamed: 0", 1)
+X_sub = scale(np.array(X_sub))
+
+# Predict probabilities for submission and save in file
+y_sub = logreg.predict_proba(X_sub)[:,1]
+
+df_submission = pd.DataFrame(np.array(y_sub), np.array(col1))
+df_submission.to_csv("submission_try_1")
+```
+
+

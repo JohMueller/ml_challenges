@@ -1,5 +1,5 @@
 ---
-title: "Introduction_ML"
+title: "Introduction to applied Machine Learning - Terminology and Workflow"
 author: "Johannes J. Mueller"
 date: "13 September 2018"
 output: html_document
@@ -8,6 +8,10 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
+We launched our Machine Learning for Social Good program! Our goal is to democratice Machine Learning and make it more accesible to people who love coding but who haven't tried their hands it yet! In our challenges you can experiment with real-life data and get started by building your own models! 
+
+To make your entry to the ML world easier we have prepared some introductory blog posts where we explain the basic concepts. We furthermore provide example code in R and Python which will guide you through the first two challenges. 
 
 ## What is Machine Learning?
 
@@ -43,7 +47,7 @@ Now that we know the key terminology we can start building our first model. The 
 
 ### 1. Loading the data and dependencies 
 
-For a basic setup I load *readxl* to load the data, *ggplot2* for exploratory data analysis, and *caret* for the machine learning part. *caret* is a very powerful package in R in which all the major ML algorithms and models are already implemented. 
+For a basic setup I load *ggplot2* for exploratory data analysis, and *caret* for the machine learning part. *caret* is a very powerful package in R in which all the major ML algorithms and models are already implemented. 
 
 ```{r packages, warning=FALSE, message=FALSE}
 library(caret)
@@ -122,5 +126,6 @@ names(submission) <- c("Id", "prob")
 # write.csv(submission, file = "submission.csv",row.names = F)
 
 ```
+
 
 
